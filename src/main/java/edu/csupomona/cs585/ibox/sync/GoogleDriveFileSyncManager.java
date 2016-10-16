@@ -67,5 +67,23 @@ public class GoogleDriveFileSyncManager implements FileSyncManager {
 		}
 		return null;
 	}
-
+	
+	/*
+	 *  This function helps test if the file exist already with in the file path 
+	 *  needed to be used for streamlining integration testing.
+	 */
+	public boolean fileExists(String fileName) {
+		try {
+			List request = service.files().list();
+			FileList files = request.execute();
+			for(File file : files.getItems()) {
+				if (file.getTitle().equals(fileName)) {
+					return true;
+				}
+			}
+		} catch (IOException e) {
+			System.out.println("An error occurred: " + e);
+		}
+		return false;
+		}
 }
