@@ -34,9 +34,11 @@ public class GoogleDriveFileSyncManagerTest {
 	private Files mfiles;
 	private List mlist;
 	private GoogleDriveFileSyncManager FileSyncManager;
-
 	private File file;
 	private FileList file_listing;
+	private java.io.File localFile;
+	private  String fileName = "test";
+	
 	
 	@Before
 	public void setup() {
@@ -50,11 +52,13 @@ public class GoogleDriveFileSyncManagerTest {
 		file.setId("test");
 		file.setTitle("test");
 		
+		
 		//file listing is needed to fake the listing of the file.
 		file_listing = new FileList();
 		java.util.List<File> list = new java.util.ArrayList<File>();
 		list.add(file);
 		file_listing.setItems(list);
+		localFile = mock(java.io.File.class);
 	}
 	
 	
@@ -72,8 +76,11 @@ public class GoogleDriveFileSyncManagerTest {
 	public void testAddFile() throws IOException {
 	
 		Files.Insert insert = mock(Files.Insert.class);
-		java.io.File localFile = new java.io.File("C:\\Test\\test");
-
+		
+		when(localFile.getName()).thenReturn(fileName);
+		when(mfiles.list()).thenReturn(mlist);
+		when(mlist.execute()).thenReturn(file_listing);
+		
 		when(mDrive.files()).thenReturn(mfiles);
 		when(mfiles.insert(any(File.class), any(FileContent.class))).thenReturn(insert);
 		when(insert.execute()).thenReturn(file);
@@ -89,7 +96,8 @@ public class GoogleDriveFileSyncManagerTest {
 	public void testUpdateFile() throws IOException {
 		
 		Files.Update update = mock(Files.Update.class);
-		java.io.File localFile = new java.io.File("C:\\Test\\test");
+			
+		when(localFile.getName()).thenReturn(fileName);
 
 		when(mDrive.files()).thenReturn(mfiles);
 		when(mfiles.list()).thenReturn(mlist);
@@ -109,12 +117,15 @@ public class GoogleDriveFileSyncManagerTest {
 	public void testDeleteFile() throws IOException {
 		
 		Files.Delete delete = mock(Files.Delete.class);
-		java.io.File localFile = new java.io.File("C:\\Test\\test");
+		
+		when(localFile.getName()).thenReturn(fileName);
+
 
 		when(mDrive.files()).thenReturn(mfiles);
 		when(mfiles.list()).thenReturn(mlist);
 		when(mlist.execute()).thenReturn(file_listing);
 		when(mfiles.delete(any(String.class))).thenReturn(delete);
+		
 		
 		FileSyncManager.deleteFile(localFile);
 		verify(delete).execute();
