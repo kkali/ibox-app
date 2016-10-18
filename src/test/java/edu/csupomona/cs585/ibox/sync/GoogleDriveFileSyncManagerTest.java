@@ -34,7 +34,7 @@ public class GoogleDriveFileSyncManagerTest {
 	private Files mfiles;
 	private List mlist;
 	private GoogleDriveFileSyncManager FileSyncManager;
-	private java.io.File localFile;
+
 	private File file;
 	private FileList file_listing;
 	
@@ -44,7 +44,6 @@ public class GoogleDriveFileSyncManagerTest {
 		mfiles = mock(Files.class);
 		mlist = mock(List.class);
 		FileSyncManager = new GoogleDriveFileSyncManager(mDrive);
-		localFile = new java.io.File("C:\\Test\\test");
 		
 		//file is used for a fake file.	
 		file = new File();
@@ -73,7 +72,8 @@ public class GoogleDriveFileSyncManagerTest {
 	public void testAddFile() throws IOException {
 	
 		Files.Insert insert = mock(Files.Insert.class);
-		
+		java.io.File localFile = new java.io.File("C:\\Test\\test");
+
 		when(mDrive.files()).thenReturn(mfiles);
 		when(mfiles.insert(any(File.class), any(FileContent.class))).thenReturn(insert);
 		when(insert.execute()).thenReturn(file);
@@ -89,7 +89,8 @@ public class GoogleDriveFileSyncManagerTest {
 	public void testUpdateFile() throws IOException {
 		
 		Files.Update update = mock(Files.Update.class);
-		
+		java.io.File localFile = new java.io.File("C:\\Test\\test");
+
 		when(mDrive.files()).thenReturn(mfiles);
 		when(mfiles.list()).thenReturn(mlist);
 		when(mlist.execute()).thenReturn(file_listing);
@@ -108,6 +109,7 @@ public class GoogleDriveFileSyncManagerTest {
 	public void testDeleteFile() throws IOException {
 		
 		Files.Delete delete = mock(Files.Delete.class);
+		java.io.File localFile = new java.io.File("C:\\Test\\test");
 
 		when(mDrive.files()).thenReturn(mfiles);
 		when(mfiles.list()).thenReturn(mlist);
