@@ -30,7 +30,7 @@ public class IntegrationTest {
 	@Ignore
 	@Test
 	public void testAddFile() throws InterruptedException {
-		String fileName = "C:\\Test\\test";
+		String fileName = "J:\\Document\\GitHubProject\\ibox-app\\test";
 		java.io.File localFile = new java.io.File(fileName);
 		
 		try {
@@ -47,7 +47,7 @@ public class IntegrationTest {
 	@Ignore
 	@Test 
 	public void testDeleteFile() {
-		String fileName = "C:\\Test\\test";
+		String fileName = "J:\\Document\\GitHubProject\\ibox-app\\test";
 		java.io.File localFile = new java.io.File(fileName);
 		
 		try {
@@ -66,7 +66,7 @@ public class IntegrationTest {
 	@Ignore
 	@Test 
 	public void testUpdateFile() {
-		String fileName = "C:\\Test\\test";
+		String fileName = "J:\\Document\\GitHubProject\\ibox-app\\test";
 		java.io.File localFile = new java.io.File(fileName);
 		try {
 			localFile.createNewFile();
